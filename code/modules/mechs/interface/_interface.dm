@@ -9,6 +9,10 @@
 	if(client)
 		client.screen |= hud_elements
 
+/mob/living/exosuit/proc/rebuild_hud()
+	hud_elements = null
+	InitializeHud()
+
 /mob/living/exosuit/InitializeHud()
 	zone_sel = new
 	if(!LAZYLEN(hud_elements))
@@ -62,7 +66,7 @@
 		if(H) H.update_system_info()
 	handle_hud_icons_health()
 	var/obj/item/cell/C = get_cell()
-	if(istype(C)) 
+	if(istype(C))
 		hud_power.maptext_x = initial(hud_power.maptext_x)
 		hud_power.maptext_y = initial(hud_power.maptext_y)
 		hud_power.maptext = SPAN_STYLE("font-family: 'Small Fonts'; -dm-text-outline: 1 black; font-size: 7px;",  "[round(get_cell().charge)]/[round(get_cell().maxcharge)]")

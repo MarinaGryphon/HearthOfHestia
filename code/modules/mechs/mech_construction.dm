@@ -79,7 +79,7 @@
 			if(!found)
 				return FALSE
 	else
-		return FALSE	
+		return FALSE
 
 	if(user)
 		var/delay = 30 * user.skill_delay_mult(SKILL_DEVICES)
@@ -101,6 +101,8 @@
 	system.forceMove(src)
 	hardpoints[system_hardpoint] = system
 	ME.installed(src)
+
+	rebuild_hud()
 
 	var/obj/screen/exosuit/hardpoint/H = hardpoint_hud_elements[system_hardpoint]
 	H.holding = system
