@@ -45,6 +45,7 @@
 				H.w_uniform.add_fingerprint(assailant)
 
 	LAZYADD(affecting.grabbed_by, src) // This is how we handle affecting being deleted.
+	events_repository.raise_event(/decl/observ/grabbed, src, assailant)
 	adjust_position()
 	action_used()
 	INVOKE_ASYNC(assailant, /atom/movable/proc/do_attack_animation, affecting)
@@ -134,6 +135,7 @@
 	if(old_affecting)
 		old_affecting.reset_offsets(5)
 		old_affecting.reset_plane_and_layer()
+		events_repository.raise_event(/decl/observ/ungrabbed, old_affecting, assailant)
 
 /*
 	This section is for newly defined useful procs.
@@ -286,8 +288,10 @@
 
 /obj/item/grab/proc/grab_slowdown()
 	. = CEILING(affecting?.get_object_size() * current_grab.grab_slowdown)
+	var/datum/extension/steerable/steerable
+	if((steerable = get_extension(affecting, /datum/extension/steerable)) && (steerable.current_steerer == assailant))
+		. /= 2
 	. /= (affecting?.atom_flags & ATOM_FLAG_WHEELED) ? 2 : 1
-	. = max(.,1)
 
 /obj/item/grab/proc/assailant_moved()
 	affecting.glide_size = assailant.glide_size // Note that this is called _after_ the Move() call resolves, so while it adjusts affecting's move animation, it won't adjust anything else depending on it.

@@ -5,8 +5,8 @@
 	anchored = FALSE
 	buckle_movable = TRUE
 	movement_handlers = list(
-		/datum/movement_handler/deny_multiz, 
-		/datum/movement_handler/delay = list(5), 
+		/datum/movement_handler/deny_multiz,
+		/datum/movement_handler/delay = list(5),
 		/datum/movement_handler/move_relay_self
 	)
 
@@ -15,7 +15,7 @@
 
 /obj/structure/bed/chair/wheelchair/Initialize()
 	. = ..()
-
+	set_extension(src, /datum/extension/steerable)
 	if(!item_form_type)
 		verbs -= .verb/collapse
 

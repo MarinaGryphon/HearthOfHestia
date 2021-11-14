@@ -15,9 +15,12 @@
 	for(var/obj/item/grab/G in target.grabbed_by)
 		if(G.assailant != src)
 			continue
+		// TODO BEFORE MERGE: Readd one-grab-per-assailant-per-affected restriction and add proper multihand grabs.
+		/*
 		if(!target_zone || !ismob(target))
 			to_chat(src, SPAN_WARNING("You already have a grip on \the [target]!"))
 			return FALSE
+		*/
 		if(G.target_zone == target_zone)
 			var/obj/O = G.get_targeted_organ()
 			if(O)

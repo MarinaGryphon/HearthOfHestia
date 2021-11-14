@@ -211,8 +211,11 @@
 #undef ENCUMBERANCE_MOVEMENT_MOD
 
 /mob/proc/encumbrance()
-	for(var/obj/item/grab/G AS_ANYTHING in get_active_grabs())
-		. = max(., G.grab_slowdown())
+	var/list/active_grabs = get_active_grabs()
+	if(length(active_grabs))
+		. = 1
+		for(var/obj/item/grab/G AS_ANYTHING in active_grabs)
+			. = max(., G.grab_slowdown())
 	. *= (0.8 ** size_strength_mod())
 	. *= (0.5 + 1.5 * (SKILL_MAX - get_skill_value(SKILL_HAULING))/(SKILL_MAX - SKILL_MIN))
 
@@ -1030,7 +1033,7 @@
 		return
 
 	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
-	
+
 	if(examine_cursor_icon && client.keys_held["Shift"])
 		client.mouse_pointer_icon = examine_cursor_icon
 
@@ -1079,11 +1082,11 @@
 	var/turf/T = loc
 
 	// We're inside something else.
-	if(!istype(T)) 
+	if(!istype(T))
 		return WEATHER_PROTECTED
-	
+
 	// Either we're outside being rained on, or we're in turf-local weather being rained on.
-	if(T.is_outside() || T.weather == weather) 
+	if(T.is_outside() || T.weather == weather)
 		var/list/weather_protection = get_weather_protection()
 		if(LAZYLEN(weather_protection))
 			return WEATHER_PROTECTED

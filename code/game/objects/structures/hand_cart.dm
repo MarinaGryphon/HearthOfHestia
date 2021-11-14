@@ -14,6 +14,10 @@
 	var/atom/movable/carrying
 	var/min_object_size = ITEM_SIZE_NORMAL
 
+/obj/structure/hand_cart/Initialize(ml, _mat, _reinf_mat)
+	. = ..()
+	set_extension(src, /datum/extension/steerable)
+
 /obj/structure/hand_cart/on_update_icon()
 	underlays.Cut()
 	cut_overlays()

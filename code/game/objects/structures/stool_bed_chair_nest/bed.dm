@@ -147,7 +147,10 @@
 	var/obj/item/chems/beaker
 	var/iv_attached = 0
 	var/iv_stand = TRUE
-	atom_flags = ATOM_FLAG_WHEELED
+
+/obj/structure/bed/roller/Initialize(ml, _mat, _reinf_mat)
+	. = ..()
+	set_extension(src, /datum/extension/steerable)
 
 /obj/structure/bed/roller/on_update_icon()
 	overlays.Cut()
