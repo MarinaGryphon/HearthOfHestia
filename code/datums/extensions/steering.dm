@@ -58,7 +58,7 @@
 			return steerer
 	return FALSE
 
-/datum/extension/steerable/proc/on_grabbed(mob/grabber)
+/datum/extension/steerable/proc/on_grabbed(var/_holder, mob/grabber)
 	if(!QDELETED(current_steerer))
 		// We're already being steered.
 		// TODO: Implement mechanics for stealing it from someone's grip.
@@ -67,7 +67,7 @@
 		return
 	start_steering(grab_check(grabber))
 
-/datum/extension/steerable/proc/on_released(mob/steerer)
+/datum/extension/steerable/proc/on_released(var/_holder, mob/steerer)
 	if(!istype(current_steerer) || QDELETED(current_steerer))
 		// We're not being steered, so we don't care about this event.
 		return
