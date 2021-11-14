@@ -381,7 +381,11 @@
 		return L
 	if(!L)
 		L = list(src)
+	var/datum/extension/steering/steering = get_extension(/datum/extension/steering, src)
+	var/atom/movable/is_steering = steering?.get_steerable()
 	for(var/obj/item/grab/G in grabs)
+		if(is_steering == G.affecting)
+			continue
 		if(G.affecting && !(G.affecting in L))
 			L += G.affecting
 			var/mob/living/affecting_mob = G.get_affecting_mob()

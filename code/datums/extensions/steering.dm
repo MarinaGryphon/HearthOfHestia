@@ -1,6 +1,6 @@
 // Steerable handling
 /datum/movement_handler/mob/steering/DoMove(var/direction, var/mover)
-	var/datum/extension/steering/steerer = get_extension(mover, /datum/extension/steering)
+	var/datum/extension/steering/steerer = get_extension(mob, /datum/extension/steering)
 	var/atom/movable/steerable = steerer.get_steerable()
 	if(!steerer)
 		return MOVEMENT_REMOVE
@@ -9,8 +9,8 @@
 		return MOVEMENT_REMOVE
 	// Steerables can only be moved in the direction they're 'facing' relative to the steerer.
 	// You can also turn them 45 degrees.
-	var/turf/dest_turf = get_step(mover, direction)
-	if(direction & get_dir(mover, steerable))
+	var/turf/dest_turf = get_step(mob, direction)
+	if(direction & get_dir(mob, steerable))
 		// If the steerable manages to move, we move the steerer too.
 		return steerable.Move(null, direction) ? MOVEMENT_PROCEED : MOVEMENT_HANDLED
 	// We need to turn before we can move it.
@@ -33,9 +33,10 @@
 /datum/extension/steering/proc/can_steer()
 	var/atom/steerable = get_steerable()
 	var/mob/steerer = holder
-	if(!steerer.Adjacent(steerable))
+	if(!steerer || !steerable || !steerer.Adjacent(steerable))
 		return FALSE
-	return FALSE
+	// grab_check() is run on released
+	return TRUE
 
 /datum/extension/steerable
 	base_type = /datum/extension/steerable

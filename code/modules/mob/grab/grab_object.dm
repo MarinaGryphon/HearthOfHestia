@@ -131,11 +131,11 @@
 		if(assailant.zone_sel)
 			events_repository.unregister(/decl/observ/zone_selected, assailant.zone_sel, src)
 		assailant = null
+	events_repository.raise_event(/decl/observ/ungrabbed, affecting, assailant)
 	. = ..()
 	if(old_affecting)
 		old_affecting.reset_offsets(5)
 		old_affecting.reset_plane_and_layer()
-		events_repository.raise_event(/decl/observ/ungrabbed, old_affecting, assailant)
 
 /*
 	This section is for newly defined useful procs.
